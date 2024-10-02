@@ -1,7 +1,8 @@
-  /*
-  **Author: Dipjyoti Das
-  **most of getfrac function taken from https://stackoverflow.com
-  */
+/*
+ **Author: Dipjyoti Das
+ **Parts of the getfrac function were inspired by a solution from Stack Overflow.
+ */
+
 #include <string.h>
 #include <math.h>
 #include "math_utils.h"
