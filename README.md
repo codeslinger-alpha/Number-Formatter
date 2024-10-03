@@ -1,4 +1,4 @@
-# Description of the C Program
+# Description of `math_utils.c`
 
 ### Overview
 This program contains two primary functions:
@@ -58,21 +58,22 @@ The `format` function is useful in situations where mathematical expressions (su
 ### Example Usage
 
 ```c
-#include<stdio.h>
-#include "math_utils.h"
-int main() {
-  double n;
-
-  printf("Enter the floating-point number (in standard form): ");
-  scanf("%lf", &n);
-
-  long long num, den;
-  /*double err = getfrac(n, 1000, &num, &den);
-  printf("The fraction is %lld/%lld,   error=%e\n", num, den, err);*/
-
-  char res[1000];
-  format(n, 1e-12, res);
-  printf("Formatted text: %s\n", res);
-
-  return 0;
+//...Header files and others
+int main()
+{
+	double n;
+	printf("Enter: ");
+	scanf("%lf",&n);
+	char res[100];
+	printf("Formatted: %s",format(n,1e-7,NULL));//replace NULL with res if you want to store output
+	return 0;
 }
+```
+### Output  
+```shell
+C:\Users\Downloads\C>gcc num-format.c -o num.exe
+
+C:\Users\Downloads\C>num.exe
+Enter: 8.306623863
+Formatted: sqrt(69)
+```
