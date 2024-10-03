@@ -2,10 +2,10 @@
  **Author: Dipjyoti Das
  **Parts of the getfrac function were inspired by a solution from Stack Overflow.
  */
-
+#include "math_utils.h"
 #include <string.h>
 #include <math.h>
-#include "math_utils.h"
+#include <stdlib.h>
 #include<stdio.h>
 double getfrac(double n, long long maxden, long long *numerator,
                long long *denominator) {
@@ -60,10 +60,14 @@ double getfrac(double n, long long maxden, long long *numerator,
   }
 }
 
-int format(double N, double TOL, char *res) {
+char* format(double N, double TOL, char *res1) {
+  char* res = res1 ? res1 : (char *)malloc(150);
+  	
   if (isnan(N)) {
-    strcpy(res, "NaN");
-    return -1; // Not a  number
+    
+	strcpy(res, "NaN");
+    
+	return res; // Not a  number
   }
   // Change the sign of n to positive, so that the numerator is printed with neg
   // sign, not the denom
@@ -83,18 +87,18 @@ int format(double N, double TOL, char *res) {
   // Huge or very small number
   if ((long long)log10(n) + 1 > 9 || (long long)log10(n) - 1 <= -9) {
     snprintf(res, 100, "%s%.9e", neg == 1 ? "-" : "", n);
-    return 1;
+    return res;
   }
   // Int within tolerance
   if (fabs(n - (long long)n) < TOL) {
     snprintf(res, 100, "%s%lld", neg == 1 ? "-" : "", (long long)n);
-    return 1;
+    return res;
   }
   const double PI =3.1415926535897932384626433832795028841971693993751058209749;
   const double n2 = n / PI;
   char temp[3][105];
   // convert to fraction(Rational)
-  if ((err_crnt = (const double)fabs(getfrac(n, 1e7, &num, &den))) < TOL) {
+  if ((err_crnt = (const double)fabs(getfrac(n, 999, &num, &den))) < TOL) {
     min = 0;
     if(den==1) snprintf(temp[0], 100, "%s%lld", neg?"-": "" ,num);
     else snprintf(temp[0], 100, "%s%lld/%lld", neg ? "-" : "", num, den);
@@ -147,9 +151,9 @@ chk:
 chk2:
   if (min == -1) {
     snprintf(res, 100, "%s%.9lf", neg ? "-" : "", n);
-    return 0; // formatting failed
+    return res; // formatting failed
   }
 
   strcpy(res, temp[min]);
-  return 1;
+  return res;
 }
